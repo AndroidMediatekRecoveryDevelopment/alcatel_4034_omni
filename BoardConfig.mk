@@ -28,7 +28,6 @@ ARCH_ARM_HAVE_NEON := true
 ARCH_ARM_HAVE_VFP := true
 ARCH_ARM_HAVE_TLS_REGISTER := true
 
-TARGET_LDPRELOAD := libxlog.so
 
 BOARD_HAS_NO_SELECT_BUTTON := true
 
@@ -42,13 +41,14 @@ BOARD_KERNEL_CMDLINE += \
 BOARD_KERNEL_BASE := 0x80000000
 BOARD_KERNEL_PAGESIZE := 2048
 BOARD_MKBOOTIMG_ARGS  := --kernel_offset 0x00008000 --ramdisk_offset 0x04000000 --tags_offset 0x0e000000 --board X510-4034-L-20
-TARGET_PREBUILT_KERNEL := device/alcatel/4034/prebuilt/kernel
+TARGET_PREBUILT_KERNEL := device/alcatel/4034/kernel
 
 # TARGET IMAGES
 TARGET_USERIMAGES_USE_EXT4 := true
+TARGET_USERIMAGES_SPARSE_EXT_DISABLED := false
 
 # RECOVERY
-TARGET_RECOVERY_FSTAB := device/alcatel/4034/recovery/etc/recovery.fstab
+TARGET_RECOVERY_FSTAB := device/alcatel/4034/recovery/etc/twrp.fstab
 
 
 # PARTTIONS
@@ -63,6 +63,9 @@ BOARD_USERDATAIMAGE_PARTITION_SIZE := 12538347520
 BOARD_FLASH_BLOCK_SIZE := 131072
 
 # TWRP stuff
+DEVICE_RESOLUTION := 480x800
+TARGET_SCREEN_HEIGHT := 800
+TARGET_SCREEN_WIDTH := 480
 TW_THEME := portrait_mdpi
 RECOVERY_GRAPHICS_USE_LINELENGTH := true
 TW_NO_REBOOT_BOOTLOADER := false
@@ -71,14 +74,16 @@ TW_BRIGHTNESS_PATH := /sys/devices/platform/leds-mt65xx/leds/lcd-backlight/brigh
 TARGET_USE_CUSTOM_LUN_FILE_PATH := /sys/devices/platform/mt_usb/musb-hdrc.0.auto/gadget/lun%d/file
 TW_MAX_BRIGHTNESS := 255
 TW_USE_MODEL_HARDWARE_ID_FOR_DEVICE_ID := true
-RECOVERY_SDCARD_ON_DATA := true
 TW_EXCLUDE_SUPERSU := true
 TW_INCLUDE_FB2PNG := true
-#TW_INTERNAL_STORAGE_PATH := "/data/media/0"
-#TW_INTERNAL_STORAGE_MOUNT_POINT := "data"
-#TW_EXTERNAL_STORAGE_PATH := "/external_sd"
-#TW_EXTERNAL_STORAGE_MOUNT_POINT := "external_sd"
-#TW_DEFAULT_EXTERNAL_STORAGE := true
+TW_INTERNAL_STORAGE_PATH := "/emmc"
+TW_INTERNAL_STORAGE_MOUNT_POINT := "emmc"
+TW_EXTERNAL_STORAGE_PATH := "/external_sd"
+TW_EXTERNAL_STORAGE_MOUNT_POINT := "external_sd"
+TW_CRYPTO_FS_TYPE := "ext4"
+TW_CRYPTO_REAL_BLKDEV := "/dev/block/platform/mtk-msdc.0/by-name/userdata"
+TW_CRYPTO_MNT_POINT := "/data"
+TW_CRYPTO_FS_OPTIONS := "nosuid,nodev,noatime,discard,noauto_da_alloc,data=ordered"
 TW_REBOOT_RECOVERY := true
 TW_EXCLUDE_SUPERSU := true
 TW_USE_TOOLBOX := true
